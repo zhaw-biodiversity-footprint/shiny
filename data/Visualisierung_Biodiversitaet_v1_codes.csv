@@ -1,0 +1,181 @@
+﻿Land;Ländercode A-2;Ländercode A-3
+Andorra;AD;AND
+Vereinigte Arabische Emirate;AE;ARE
+Afghanistan;AF;AFG
+Antigua;AG;ATG
+Albanien;AL;ALB
+Armenien;AM;ARM
+Angola;AO;AGO
+Argentinien;AR;ARG
+Österreich;AT;AUT
+Australien;AU;AUS
+Aserbaidschan;AZ;AZE
+Bosnien und Herzegowina;BA;BIH
+Barbados;BB;BRB
+Bangladesch;BD;BGD
+Belgien;BE;BEL
+Burkina Faso;BF;BFA
+Bulgarien;BG;BGR
+Bahrain;BH;BHR
+Burundi;BI;BDI
+Benin;BJ;BEN
+St. Barthélemy;BL;BLM
+Bermuda;BM;BMU
+Bolivien;BO;BOL
+Brasilien;BR;BRA
+Bahamas;BS;BHS
+Bhutan;BT;BTN
+Belarus;BY;BLR
+Belize;BZ;BLZ
+Kanada;CA;CAN
+Kongo (RDK);CD;COD
+Zentralafrikanische Republik;CF;CAF
+Kongo, Republik;CG;COG
+Schweiz;CH;CHE
+Elfenbeinküste;CI;CIV
+Chile;CL;CHL
+Kamerun;CM;CMR
+China;CN;CHN
+Kolumbien;CO;COL
+Costa Rica;CR;CRI
+Kuba;CU;CUB
+Cabo Verde;CV;CPV
+Zypern;CY;CYP
+Tschechien;CZ;CZE
+Deutschland;DE;DEU
+Dschibuti;DJ;DJI
+Dänemark;DK;DNK
+Dominikanische Republik;DO;DOM
+Algerien;DZ;DZA
+Ecuador;EC;ECU
+Estland;EE;EST
+Ägypten;EG;EGY
+Eritrea;ER;ERI
+Spanien;ES;ESP
+Äthiopien;ET;ETH
+Finnland;FI;FIN
+Fidschi;FJ;FJI
+Frankreich;FR;FRA
+Gabun;GA;GAB
+Vereinigtes Königreich;GB;GBR
+Grenada;GD;GRD
+Georgien;GE;GEO
+Französisch-Guayana;GF;GUF
+Ghana;GH;GHA
+Guinea;GN;GIN
+Guadeloupe;GP;GLP
+Griechenland;GR;GRC
+Guatemala;GT;GTM
+Guam;GU;GUM
+Guyana;GY;GUY
+Hongkong;HK;HKG
+Honduras;HN;HND
+Kroatien;HR;HRV
+Haiti;HT;HTI
+Ungarn;HU;HUN
+Indonesien;ID;IDN
+Irland;IE;IRL
+Israel;IL;ISR
+Indien;IN;IND
+Iran;IR;IRN
+Island;IS;ISL
+Italien;IT;ITA
+Jamaika;JM;JAM
+Jordanien;JO;JOR
+Japan;JP;JPN
+Kenia;KE;KEN
+Kirgisistan;KG;KGZ
+Kambodscha;KH;KHM
+St. Kitts;KN;KNA
+Südkorea;KR;KOR
+Kuwait;KW;KWT
+Kaimaninseln;KY;CYM
+Kasachstan;KZ;KAZ
+Laos;LA;LAO
+Libanon;LB;LBN
+Sri Lanka;LK;LKA
+Litauen;LT;LTU
+Luxemburg;LU;LUX
+Lettland;LV;LVA
+Libyen;LY;LBY
+Marokko;MA;MAR
+Moldawien;MD;MDA
+Montenegro;ME;MNE
+Madagaskar;MG;MDG
+Nordmazedonien;MK;MKD
+Mali;ML;MLI
+Myanmar;MM;MMR
+Mongolei;MN;MNG
+Martinique;MQ;MTQ
+Malta;MT;MLT
+Mauritius;MU;MUS
+Malediven;MV;MDV
+Malawi;MW;MWI
+Mexiko;MX;MEX
+Malaysia;MY;MYS
+Mosambik;MZ;MOZ
+Namibia;NA;NAM
+Neukaledonien;NC;NCL
+Nigeria;NG;NGA
+Nicaragua;NI;NIC
+Niederlande;NL;NLD
+Norwegen;NO;NOR
+Nepal;NP;NPL
+Neuseeland;NZ;NZL
+Oman;OM;OMN
+Panama;PA;PAN
+Peru;PE;PER
+Französisch-Polynesien;PF;PYF
+Papua;PG;PNG
+Philippinen;PH;PHL
+Pakistan;PK;PAK
+Polen;PL;POL
+Portugal;PT;PRT
+Paraguay;PY;PRY
+Katar;QA;QAT
+Réunion;RE;REU
+Rumänien;RO;ROU
+Serbien;RS;SRB
+Russland;RU;RUS
+Ruanda;RW;RWA
+Saudi-Arabien;SA;SAU
+Salomonen;SB;SLB
+Sudan;SD;SDN
+Schweden;SE;SWE
+Singapur;SG;SGP
+Slowenien;SI;SVN
+Slowakei;SK;SVK
+Sierra Leone;SL;SLE
+Senegal;SN;SEN
+Somalia;SO;SOM
+Suriname;SR;SUR
+São Tomé und Príncipe;ST;STP
+El Salvador;SV;SLV
+St. Martin (NL);SX;SXM
+Syrien;SY;SYR
+Eswatini;SZ;SWZ
+Togo;TG;TGO
+Thailand;TH;THA
+Tadschikistan;TJ;TJK
+Tunesien;TN;TUN
+Türkei;TR;TUR
+Trinidad;TT;TTO
+Taiwan;TW;TWN
+Tansania;TZ;TZA
+Ukraine;UA;UKR
+Uganda;UG;UGA
+USA;US;USA
+Uruguay;UY;URY
+Usbekistan;UZ;UZB
+St. Vincent;VC;VCT
+Venezuela;VE;VEN
+Amerikanische Jungferninseln;VI;VIR
+Vietnam;VN;VNM
+Vanuatu;VU;VUT
+Samoa;WS;WSM
+Kosovo;XK;XKO
+Jemen;YE;YEM
+Mayotte;YT;MYT
+Südafrika;ZA;ZAF
+Sambia;ZM;ZMB
+Simbabwe;ZW;ZWE
