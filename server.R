@@ -18,7 +18,7 @@ function(input, output, session) {
     # if(length(pdfs_products())>2){
     #   browser()
     #   if(is_null(map(weights_input(), ~input[[.x]])[[1]])){
-        map(weights_input(), ~ numericInput(.x, NULL,  min = 0.1, max = 100, value = 1, step = 0.1))
+        map(weights_input(), ~ numericInput(.x, NULL,  value = 1, min = 0.1, max = 100, step = 0.1))
       # }else{
       #   browser()
       #   map(weights_input(), ~ sliderInput(.x, NULL,  min = 1, max = 10, value = as.numeric(input[[.x]])))
@@ -39,7 +39,7 @@ function(input, output, session) {
   
   #calculate pdfs of products with weight --> impacts as list
   impacts <- reactive({
-    # if(length(pdfs_products())>1){
+    # if(length(pdfs_products())>2){
     #   browser()
     # }
     # as.list(unlist(pdf_products_full()) * unlist(map(weights_input(), ~input[[.x]]))[seq_along(unlist(pdf_products_full()))])
@@ -93,65 +93,55 @@ function(input, output, session) {
   
   ### Pie chart: percent of each product in selected basket
   
-  ## make data frame 
+  ## make data frame (not needed anymore)
   
   # sum of impact for each product 
+  
   dat_selected_sum_prod <- reactive({
     if(sum(unlist(impacts()))>0){
-      dat_selected2() |> 
-        group_by(Produkt) |> 
+      dat_selected2() |>
+        group_by(Produkt) |>
         summarise(impact_product = sum(impact))
     }
   })
+  # 
+  # # get per product the highest three impacts of countries 
+  # calculate_highest_countries <- function(data, data_sum){
+  #   data_sum <- mutate(data_sum, top_country = 0)
+  #   for(i in 1:nrow(data_sum)){
+  #     top_country_n3 <- data |> 
+  #       filter(Produkt==data_sum$Produkt[i]) |> 
+  #       top_n(3, impact) |> 
+  #       arrange(desc(impact))
+  #     
+  #     data_sum$top_country[i] <- paste(top_country_n3$Land, top_country_n3$impact, sep = ": ", collapse = ", ")
+  #   }
+  #   return(data_sum)
+  # }
+  # 
+  # piechart_df <- reactive({calculate_highest_countries(dat_selected2(), dat_selected_sum_prod())})
+  # 
+  # # plot only impact > 0
+  # piechart_df_filter <- reactive({
+  #   if(sum(unlist(impacts()))>0){
+  #     subset(piechart_df(), impact_product != "0")}
+  #     })
   
-  # get per product the highest three impacts of countries 
-  calculate_highest_countries <- function(data, data_sum){
-    data_sum <- mutate(data_sum, top_country = 0)
-    for(i in 1:nrow(data_sum)){
-      top_country_n3 <- data |> 
-        filter(Produkt==data_sum$Produkt[i]) |> 
-        top_n(3, impact) |> 
-        arrange(desc(impact))
-      
-      data_sum$top_country[i] <- paste(top_country_n3$Land, top_country_n3$impact, sep = ": ", collapse = ", ")
-    }
-    return(data_sum)
-  }
+  ## pie chart (not needed anymore)
   
-  piechart_df <- reactive({calculate_highest_countries(dat_selected2(), dat_selected_sum_prod())})
-  
-  # plot only impact > 0
-  piechart_df_filter <- reactive({
-    if(sum(unlist(impacts()))>0){
-      subset(piechart_df(), impact_product != "0")}
-      })
-  
-  ## pie chart
-  
-  observe({
-    if(sum(unlist(impacts()))>0){
-      output$piechart_warenkorb <- renderPlotly({
-        fig <- piechart_df_filter() |>
-          plot_ly(labels = ~Produkt, values = ~impact_product, type = 'pie',
-                  textinfo = 'percent',
-                  hoverinfo ="text",
-                  text = ~paste("PDF: ", impact_product, "<br>",
-                        "Länder höchste Werte: ", top_country))
-      })
-    }
-  })
-
   # observe({
-  #   if(nrow(piechart_df()) > 0){
+  #   if(sum(unlist(impacts()))>0){
   #     output$piechart_warenkorb <- renderPlotly({
   #       fig <- piechart_df_filter() |>
-  #         plot_ly(labels = ~products, values = ~values, type = 'pie')
-  #       # layout(title = "Länder mit den 10 höchsten PDFs",
-  #       #        yaxis = list(categoryorder = "array", categoryarray =  top_ten_worst()$Land, title = list(text = "")),
-  #       #        xaxis = list(title = list(text = "PDF/kg", standoff = 20), exponentformat = "e"))
+  #         plot_ly(labels = ~Produkt, values = ~impact_product, type = 'pie',
+  #                 textinfo = 'percent',
+  #                 hoverinfo ="text",
+  #                 text = ~paste("PDF: ", impact_product, "<br>",
+  #                       "Länder höchste Werte: ", top_country))
   #     })
   #   }
   # })
+
   
   ### Sunburst
   
@@ -213,12 +203,30 @@ function(input, output, session) {
       output$sunburst <- renderPlotly({
         fig <- df_sunburst() |>
           plot_ly(ids = ~ids, labels = ~labels, parents = ~parents, 
-                  values = ~values, type = "sunburst", branchvalues = "total")
+                  values = ~values, type = "sunburst", branchvalues = "total",
+                  hoverinfo ="text",
+                  hovertext = ~paste(labels, "<br>", "PDF: ",formatC(values, format ="e", digits = digits))) |> 
+          layout(title = list(text = "Biodiversitäts-Fussabdruck ausgewählter Produkt",
+                              x = 0.5,
+                              xanchor = "center"),
+                 margin = list(b = 75),
+                 annotations = list(
+                   x = 0.5,
+                   y = -0.075,
+                   text = "Hinweis: Klicke auf ein beliebiges Produkt, um mehr <br> Informationen zum jeweiligen Biodiversitäts-Impact zu erhalten",
+                   showarrow = FALSE,
+                   xref = 'paper',
+                   yref = 'paper',
+                   xanchor = 'center',
+                   yanchor = 'top'
+                 )
+          )
+
       })
     }
   })
   
-  
+
   ### Bar chart
   
   dat_bar <- reactive({dat_selected_sum_prod() |> 
@@ -233,15 +241,17 @@ function(input, output, session) {
     
   dat_bar_selected <- reactive(rbind(dat_bar_important_prod(), data.frame(Produkt="Übrige", impact_product=dat_bar_uebrige(), Quelle="Selektierter Warenkorb")))
   
-  dat_bar_chart2 <- reactive(rbind(dat_bar_chart, dat_bar_selected()))
-  
+  dat_bar_chart2 <- reactive({
+    rbind(dat_bar_chart, dat_bar_selected()) |> 
+      mutate(impact_product_percent = impact_product / ch_pdf_woche * 100)})
+
   observe({
     if(sum(unlist(impacts())) > 0){
-      output$barchart_ch <- renderPlotly({
+      output$barchart_warenkorb <- renderPlotly({
         fig <- dat_bar_chart2() |>
-          plot_ly(x = ~impact_product, y = ~Quelle, type = "bar", color = ~Produkt, showlegend = T,
+          plot_ly(x = ~impact_product_percent, y = ~Quelle, type = "bar", color = ~Produkt, showlegend = T,
                   hoverinfo ="text",
-                  text = ~paste("Produkt: ", Produkt , "<br>", "PDF: ", impact_product))|> 
+                  hovertext = ~paste("Produkt: ", Produkt , "<br>", "Anteil PDF (%): ", round(impact_product_percent,2)))|> 
           layout(xaxis = list(title = 'PDF', exponentformat = "e"), yaxis = list(title = '', tickangle = 270), barmode = 'stack')
       })
     }
@@ -252,7 +262,6 @@ function(input, output, session) {
   #     quelle = c("PDF CH total", "gewählter Warenkorb"),
   #     pdf_total_warenkorb = c(sum(dat_uebersicht$Total_PDF_Produkt_CH, na.rm = TRUE), sum(unlist(impacts())))
   #   )
-  # })
   # 
   #percent of PDF (selected products and weight) compared to mean CH (muss noch angepasst werden)
   # observe({
@@ -294,6 +303,7 @@ function(input, output, session) {
     leaflet() |>
       addProviderTiles(providers$CartoDB.Positron) |>
       setView(lng = 8.25, lat =  46.85, zoom = 2)
+      #flyToBounds(lng1 = 85, lat1 = -180, lng2 = -85, lat2 = 180)
   })
 
   ## map
@@ -305,7 +315,7 @@ function(input, output, session) {
         qpal_col <- qpal(dat_countries()$impact_country) # hex codes
         qpal_col_legend <- unique(qpal(sort(dat_countries()$impact_country))) # hex codes
         qpal_labs <- quantile(dat_countries()$impact_country, seq(0, 1, length.out = 9)) # depends on n from pal
-        qpal_labs <- formatC(qpal_labs, format = "e", digits = 2)
+        qpal_labs <- formatC(qpal_labs, format = "e", digits = digits)
         qpal_labs <- paste(lag(qpal_labs), qpal_labs, sep = " - ")[-1] # first lag is NA
         leafletProxy("map", data = dat_countries(), session) |>
           clearShapes() |>
@@ -322,7 +332,7 @@ function(input, output, session) {
             position = "bottomleft",
             colors = qpal_col_legend,  # Providing the color values for the legend
             labels = qpal_labs,  # Labels corresponding to the color
-            title = "PDF/kg"
+            title = "PDF"
           )
       }else{
         leafletProxy("map", data = dat_countries(), session) |>
@@ -340,7 +350,7 @@ function(input, output, session) {
             position = "bottomleft",
             colors = "grey",  # Providing the color values for the legend
             labels = dat_countries()$impact_country,  # Labels corresponding to the color
-            title = "PDF/kg"
+            title = "PDF"
           )
       }
     }
@@ -382,30 +392,28 @@ function(input, output, session) {
   #       )
   # })
 
-  #   
   
-  ### Images
+  ### Barchart top countries
   
-  output$image1 <- renderImage( 
-    { 
-      list(src = "images/Bild1.png", height = "25%") 
-    }, 
-    deleteFile = FALSE 
-  ) 
+  top_ten_worst <- reactive({
+    if(sum(unlist(impacts()))>0){
+      dat_selected_sum_country() |> 
+        ungroup() |> 
+        top_n(10, impact_country) |> 
+        arrange(impact_country)   
+    }
+  })
   
-  output$image2 <- renderImage( 
-    { 
-      list(src = "images/Bild2.jpg", height = "25%") 
-    }, 
-    deleteFile = FALSE 
-  ) 
+  output$barchart_countries <- renderPlotly({
+    if(sum(unlist(impacts())) > 0){
+      fig <- top_ten_worst() |>
+        plot_ly(y = ~Land, x = ~impact_country, type = "bar", orientation = 'h',
+                hovertext = ~paste("PDF: ", formatC(impact_country, format ="e", digits = digits)),
+                hoverinfo = "text") |> 
+             layout(yaxis = list(categoryorder = "array", categoryarray =  top_ten_worst()$Land, title = list(text = "")),
+                    xaxis = list(title = list(text = "PDF", standoff = 20), exponentformat = "e"))
+        
+    }
+  }) 
   
-  output$image3 <- renderImage( 
-    { 
-      list(src = "images/Bild3.png", height = "25%") 
-    }, 
-    deleteFile = FALSE 
-  ) 
-  
-
 }

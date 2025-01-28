@@ -58,10 +58,10 @@ dat_uebersicht2 <- dat_uebersicht |>
          Total_PDF_Produkt_CH = as.numeric(formatC(Total_PDF_Produkt_CH, format = "e", digits = 2)),
          Anteil = as.numeric(substr(Anteil, start=-1, stop=stop)),
          Total_PDF_Produkt_CH_Woche = Total_PDF_Produkt_CH/52,
-         Quelle = "Durchschnittlicher CH Warenkorb/Woche") |> 
+         Quelle = "⌀ CH Warenkorb/Woche") |> 
   arrange(Produkt) 
 
-important_products <- c("Kakao","Kaffee","Olivenöl","Rind","Poulet","Schwein","Weizen",	"Wein")
+important_products <- c("Kakao","Kaffeebohnen","Olivenöl","Rind","Poulet","Schwein","Weizen",	"Wein")
 
 important_products_df <- dat_uebersicht2 |> 
   mutate(impact_product=Total_PDF_Produkt_CH_Woche) |> 
@@ -72,7 +72,9 @@ uebrige <- dat_uebersicht2 |>
   filter(!(Produkt %in% important_products)) |> 
   summarise(impact_product = sum(Total_PDF_Produkt_CH_Woche))
 
-dat_bar_chart <- rbind(important_products_df, data.frame(Produkt="Übrige", impact_product=uebrige, Quelle="Durchschnittlicher CH Warenkorb/Woche"))
+dat_bar_chart <- rbind(important_products_df, data.frame(Produkt="Übrige", impact_product=uebrige, Quelle="⌀ CH Warenkorb/Woche"))
+
+ch_pdf_woche <- sum(dat_bar_chart$impact_product)
 
 ### Variablen für Shiny
 
@@ -81,7 +83,8 @@ products_warenkorb <- c("", sort(unique(dat_uebersicht2$Produkt)))
 
 # products_map <- sort(unique(dat_laender$Produkt))
 
-
+#Number of digits
+digits <- 3
 
 
 #Farbpalette (falls Palette über alle Werte/Produkte sein glecih sollte)
