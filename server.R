@@ -37,7 +37,7 @@ function(input, output, session) {
   
   #calculate pdfs of products with weight --> impacts as list
   impacts <-eventReactive(input$display,{
-    # if(length(pdfs_products())>0){
+    # if(length(pdfs_products())>=0){
     #   browser()
     # }
     as.list(unlist(pdf_products_full()) *   weights_full_vector()) #gibt warnung
@@ -70,8 +70,8 @@ function(input, output, session) {
   })
   
   
-  ### Show only outputs when this condition is met (product and weight are selected)
-  condition <- reactive(sum(!is.na(weights())) == sum(pdfs_names_vector()!=""))
+  ### Show only outputs when this conditions are met (product and weight are selected plus at least one product)
+  condition <- reactive(sum(!is.na(weights())) == sum(pdfs_names_vector()!="") && sum(pdfs_names_vector()!="") > 0)
   
   
   ### Total sum of basket
