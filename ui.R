@@ -6,12 +6,12 @@ page_fluid(
   includeCSS("www/bootstrap.css"),
     layout_column_wrap(
       width = NULL,
-      style = css(grid_template_columns = "1fr 3fr"),
+      style = css(grid_template_columns = "1fr 2fr"),
         card(fill = F,
-             height = "80vh",
+             height = "100vh",
              card_header("Warenkorb"),
              card_body(
-               max_height = 200,
+               max_height = 150,
                value_box(
                  title = "Totale Summe gewählter Warenkorb (PDF)",
                  showcase = icon("shopping-cart"),
@@ -33,6 +33,9 @@ page_fluid(
                       uiOutput("weight"))
                 )
               ),
+             card_body(
+               actionButton("display", "Berechne Biodiversity-Footprint", width = 200, class = "btn-primary btn-lg")
+             )
          ),
         card(height = "80vh",
              card_header("PDF des Warenkorbes"),
