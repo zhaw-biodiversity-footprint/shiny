@@ -84,7 +84,7 @@ products_warenkorb <- c("", sort(unique(dat_uebersicht2$Produkt)))
 # products_map <- sort(unique(dat_laender$Produkt))
 
 #Number of digits
-digits <- 3
+digits <- 1
 
 
 #Farbpalette (falls Palette über alle Werte/Produkte sein glecih sollte)

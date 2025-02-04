@@ -11,15 +11,6 @@ page_fluid(
              height = "100vh",
              card_header("Warenkorb"),
              card_body(
-               max_height = 150,
-               value_box(
-                 title = "Totale Summe gewählter Warenkorb (PDF)",
-                 showcase = icon("shopping-cart"),
-                 value = uiOutput("pdf_total"),
-                 theme = value_box_theme(bg = "#2c3e50", fg = "#f8f9fa"),
-                 class = "border")
-             ),
-             card_body(
                max_height = 100,
                numericInput("n", "Anzahl Produkte", value = 1, min = 1, max=10)
              ),
