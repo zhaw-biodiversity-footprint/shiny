@@ -2,51 +2,35 @@
 source("utils.R")
 
 ### UI
-page_fluid(
+page_sidebar(
   includeCSS("www/bootstrap.css"),
-    layout_column_wrap(
-      width = NULL,
-      style = css(grid_template_columns = "1fr 2fr"),
-        card(fill = F,
-             height = "100vh",
-             card_header("Warenkorb"),
-             card_body(
-               max_height = 100,
-               numericInput("n", "Anzahl Produkte", value = 1, min = 1, max=10)
-             ),
-             card_body(
-               #min_height = 700,
-               layout_column_wrap(
-                 width = 1/2,
-                 card("Produkte",
-                      uiOutput("product")),
-                 card("Menge (kg)",
-                      uiOutput("weight"))
-                )
-              ),
-             card_body(
-               actionButton("display", "Berechne Biodiversity-Footprint", width = 200, class = "btn-primary btn-lg")
-             )
-         ),
-        card(height = "80vh",
-             card_header("PDF des Warenkorbes"),
-             card_body(
-               layout_column_wrap(
-                 #min_height = 500,
-                 width = 1/2,
-                 leaflet::leafletOutput("map"),
-                 plotlyOutput("sunburst")
-               )
-             ),
-             card_body(
-               #min_height = 200,
-               layout_column_wrap(
-                 width = 1/2,
-                 plotlyOutput("barchart_countries"),
-                 plotlyOutput("barchart_warenkorb")
-                )
-              )
-        )
+  fillable = TRUE,
+ 
+  sidebar = sidebar(
+    id = "show",
+    width = 600,
+    title = "Warenkorb",
+    fluidRow(
+      column(8, numericInput("n", "Anzahl Produkte", value = 1, min = 1, max=10))
+    ),
+    fluidRow(
+      column(8, "Produkte"),
+      column(4, "Menge (kg)")
+    ),
+    fluidRow(
+      column(8, uiOutput("product")),
+      column(4, uiOutput("weight"))
+    ),
+    fluidRow(actionButton("display", "Berechne Biodiversity-Footprint", width = 200, class = "btn-primary btn-lg")
     )
+  ),
+  fluidRow(
+    column(6, leaflet::leafletOutput("map")),
+    column(6, plotlyOutput("sunburst"))
+  ),
+  fluidRow(
+    column(6, plotlyOutput("barchart_countries")),
+    column(6, plotlyOutput("barchart_warenkorb"))
+  )
 )
 

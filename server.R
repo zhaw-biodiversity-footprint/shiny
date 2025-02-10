@@ -72,6 +72,11 @@ function(input, output, session) {
   ### Condition: Show only outputs when this conditions are met (product and weight are selected plus at least one product)
   condition <- reactive(sum(!is.na(weights())) == sum(pdfs_names_vector()!="") && sum(pdfs_names_vector()!="") > 0)
   
+  observeEvent(input$display, {
+    if(condition()){
+      toggle_sidebar(id="show")
+    }
+   })
 
   ### Sunburst
 
