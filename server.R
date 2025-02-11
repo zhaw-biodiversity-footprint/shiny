@@ -2,6 +2,23 @@
 
 function(input, output, session) {
   
+  # Infobutton
+  observeEvent(input$infobutton, {
+    showModal(
+      modalDialog(
+        title = "Information",
+        HTML(
+          "Berechne hier den Biodiversitäts-Fussabdruck von verschiedenen Lebensmitteln. 
+        <br><br>
+        Bestimme zuerst, wie viele Produkte du in deinem «Warenkorb» möchtest und wähle dann die spezifischen Produkte mit dem jeweiligen Gewicht aus.
+        <br><br>
+          Auf der Weltkarte siehst du nun, in welchen Ländern der potenzielle Biodiversitätsverlust geschieht. Im Balkendiagramm auf der rechten Seite siehst du den kumulierten Biodiversitäts-Fussabdruck <b>deines Warenkorbes</b>, verglichen mit dem typischen Schweizer Konsum von <b>einer Woche</b>."
+        ),
+        easyClose = TRUE
+      )
+    )
+  })
+  
   ### Basket
   
   #create list with product number depending on how many products can be selected

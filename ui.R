@@ -10,6 +10,12 @@ page_sidebar(
     id = "show",
     width = 600,
     title = "Warenkorb",
+    actionButton(
+      "infobutton",
+      label = "Info",
+      icon = icon("info-circle"),
+      style = "position:absolute; top:40px; left:150px;"
+    ),
     fluidRow(
       column(8, numericInput("n", "Anzahl Produkte", value = 1, min = 1, max=10))
     ),
@@ -33,4 +39,5 @@ page_sidebar(
     column(6, plotlyOutput("barchart_warenkorb",  height = "45vh"))
   )
 )
+
 
