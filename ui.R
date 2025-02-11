@@ -25,12 +25,12 @@ page_sidebar(
     )
   ),
   fluidRow(
-    column(6, leaflet::leafletOutput("map")),
-    column(6, plotlyOutput("sunburst"))
+    column(6, leaflet::leafletOutput("map",  height = "45vh")),
+    column(6, plotlyOutput("sunburst",  height = "45vh"))
   ),
   fluidRow(
-    column(6, plotlyOutput("barchart_countries")),
-    column(6, plotlyOutput("barchart_warenkorb"))
+    column(6, plotlyOutput("barchart_countries",  height = "45vh")),
+    column(6, plotlyOutput("barchart_warenkorb",  height = "45vh"))
   )
 )
 

@@ -202,7 +202,7 @@ function(input, output, session) {
   ## basemap
 
   output$map <- renderLeaflet({
-    leaflet() |>
+    leaflet(height = 50) |>
       addProviderTiles(providers$CartoDB.Positron) |>
       setView(lng = 8.25, lat =  46.85, zoom = 1)
       #flyToBounds(lng1 = 85, lat1 = -180, lng2 = -85, lat2 = 180)
