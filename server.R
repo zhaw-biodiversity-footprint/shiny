@@ -45,7 +45,6 @@ function(input, output, session) {
   pdf_products_full <- eventReactive(input$display,{rapply(pdfs_products(),function(x) ifelse(identical(x, numeric(0)),0,x), how = "replace")})
   
   #get imput weights as vector
-  
   weights <- eventReactive(input$display,{map(weights_input(), ~input[[.x]])})
   
   #if no weight selected NA to 0
@@ -53,9 +52,6 @@ function(input, output, session) {
   
   #calculate pdfs of products with weight --> impacts as list
   impacts <-eventReactive(input$display,{
-    # if(length(pdfs_products())>=0){
-    #   browser()
-    # }
     as.list(unlist(pdf_products_full()) *   weights_full_vector()) #gibt warnung
     })
   
@@ -64,7 +60,6 @@ function(input, output, session) {
   
   
   # filter dat with pdf per country, only selected products in basket
-  
   dat_selected <- eventReactive(input$display,{
       dat |> 
         filter(Produkt %in% pdfs_names_vector()) |> 
@@ -73,7 +68,6 @@ function(input, output, session) {
   })
   
   # calculate impacts per selected product and country
-  
   calculate_impact <- function(data, products, weights){
     for(i in seq_along(products)){
       data$impact[data$Produkt==products[i]] <- data$PDF_CH_mean[data$Produkt==products[i]] * weights[i]
@@ -87,7 +81,11 @@ function(input, output, session) {
   
   
   ### Condition: Show only outputs when this conditions are met (product and weight are selected plus at least one product)
+  
   condition <- reactive(sum(!is.na(weights())) == sum(pdfs_names_vector()!="") && sum(pdfs_names_vector()!="") > 0)
+  
+  
+  ### Track whether sidebar should be open or closed
   
   observeEvent(input$display, {
     if(condition()){
@@ -95,6 +93,7 @@ function(input, output, session) {
     }
    })
 
+  
   ### Sunburst
 
   dat_selected3 <- eventReactive(input$display,{
@@ -102,6 +101,7 @@ function(input, output, session) {
         mutate(Land_Produkt = paste(dat_selected2()$Produkt, dat_selected2()$Land, sep = "_"))
   })
 
+  #extract 3 countries with highest impact per product
   dat_top3 <- eventReactive(input$display,{
       dat_selected3() |>
         select(c(1,2,7,8)) |>
@@ -109,6 +109,7 @@ function(input, output, session) {
         top_n(3, impact)
   })
 
+  #calculate impact of other countries per product
   dat_rest <- eventReactive(input$display,{
     dat_selected3() |>
       filter(!(Land_Produkt %in% dat_top3()$Land_Produkt)) |>
@@ -159,7 +160,6 @@ function(input, output, session) {
   ### Bar chart
   
   # sum of impact for each product 
-  
   dat_selected_sum_prod <- eventReactive(input$display,{
     dat_selected2() |>
       group_by(Produkt) |>
@@ -167,13 +167,16 @@ function(input, output, session) {
       mutate(Quelle = "Selektierter Warenkorb")
   })
 
+  # sum of "important" products
   dat_bar_important_prod <- eventReactive(input$display,{dat_selected_sum_prod() |>
       filter(Produkt %in% important_products)})
 
+  # sum of others selected products
   dat_bar_uebrige <- eventReactive(input$display,{dat_selected_sum_prod() |>
       filter(!(Produkt %in% important_products)) |>
       summarise(impact_product = sum(impact_product))})
 
+  # make one data frame and calculate percentage of CH average basket of a week
   dat_bar_selected <- eventReactive(input$display,{
     rbind(dat_bar_important_prod(), data.frame(Produkt="Übrige", impact_product=dat_bar_uebrige(), Quelle="Selektierter Warenkorb"))})
 
@@ -278,6 +281,7 @@ function(input, output, session) {
 
   ### Barchart top countries
 
+  #extract countries with highest impact
   top_ten_worst <- eventReactive(input$display,{
     dat_selected_sum_country() |>
       ungroup() |>
